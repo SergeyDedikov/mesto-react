@@ -13,7 +13,7 @@ function App() {
       <div className="popup popup_type_edit-profile">
         <div className="popup__container popup__container_type_edit-profile">
           <form
-            name="editProfile"
+            name="edit-profile"
             className="popup__form popup__form_edit-profile"
             noValidate
           >
@@ -61,7 +61,7 @@ function App() {
       <div className="popup popup_type_add-place">
         <div className="popup__container popup__container_type_add-place">
           <form
-            name="addPlace"
+            name="add-place"
             className="popup__form popup__form_add-place"
             noValidate
           >
@@ -109,7 +109,7 @@ function App() {
       <div className="popup popup_type_edit-avatar">
         <div className="popup__container popup__container_type_edit-avatar">
           <form
-            name="editAvatar"
+            name="edit-avatar"
             className="popup__form popup__form_edit-avatar"
             noValidate
           >
@@ -141,7 +141,7 @@ function App() {
       <div className="popup popup_type_confirmation">
         <div className="popup__container popup__container_type_confirmation">
           <form
-            name="confirmCardRemove"
+            name="confirmation"
             className="popup__form popup__form_confirmation"
             noValidate
           >
