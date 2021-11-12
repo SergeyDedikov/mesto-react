@@ -15,7 +15,7 @@ function App() {
           <form
             name="editProfile"
             className="popup__form popup__form_edit-profile"
-            novalidate
+            noValidate
           >
             <h3 className="popup__heading">Редактировать профиль</h3>
             <fieldset className="popup__input-container">
@@ -26,8 +26,8 @@ function App() {
                   type="text"
                   name="name"
                   required
-                  minlength="2"
-                  maxlength="40"
+                  minLength="2"
+                  maxLength="40"
                 />
                 <span id="name-error" className="popup__error"></span>
               </label>
@@ -38,8 +38,8 @@ function App() {
                   type="text"
                   name="job"
                   required
-                  minlength="2"
-                  maxlength="200"
+                  minLength="2"
+                  maxLength="200"
                 />
                 <span id="job-error" className="popup__error"></span>
               </label>
@@ -63,7 +63,7 @@ function App() {
           <form
             name="addPlace"
             className="popup__form popup__form_add-place"
-            novalidate
+            noValidate
           >
             <h3 className="popup__heading">Новое место</h3>
             <fieldset className="popup__input-container">
@@ -75,8 +75,8 @@ function App() {
                   name="place"
                   placeholder="Название"
                   required
-                  minlength="2"
-                  maxlength="30"
+                  minLength="2"
+                  maxLength="30"
                 />
                 <span id="place-error" className="popup__error"></span>
               </label>
@@ -111,7 +111,7 @@ function App() {
           <form
             name="editAvatar"
             className="popup__form popup__form_edit-avatar"
-            novalidate
+            noValidate
           >
             <h3 className="popup__heading">Обновить аватар</h3>
             <fieldset className="popup__input-container">
@@ -143,7 +143,7 @@ function App() {
           <form
             name="confirmCardRemove"
             className="popup__form popup__form_confirmation"
-            novalidate
+            noValidate
           >
             <h3 className="popup__heading">Вы уверены?</h3>
             <button
