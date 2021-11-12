@@ -1,12 +1,10 @@
-import logo from "./images/logo-mesto.svg";
-import "./index.css";
+import "../index.css";
+import Header from "./Header";
 
 function App() {
   return (
     <>
-      <header className="header">
-        <img className="header__logo" src={logo} alt="Логотип Место.Россия" />
-      </header>
+      <Header/>
 
       <main className="main">
         <section className="profile" aria-label="Профиль пользователя">
