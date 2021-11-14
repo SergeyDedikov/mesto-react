@@ -1,7 +1,7 @@
-function Cards(props) {
+function Card(props) {
   return (
     <ul className="cards__list">
-      {props.cards.map((card, i) => (
+      {props.card.map((card, i) => (
         <li key={card._id}>
           <figure className="card">
             <img
@@ -30,4 +30,4 @@ function Cards(props) {
   );
 }
 
-export default Cards;
+export default Card;

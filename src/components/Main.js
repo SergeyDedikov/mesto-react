@@ -1,6 +1,6 @@
 import React from "react";
 import api from "../utils/api";
-import Cards from "./Cards";
+import Card from "./Card";
 
 function Main(props) {
   // --  Переменные состояния профиля
@@ -68,7 +68,7 @@ function Main(props) {
       </section>
 
       <section className="cards" aria-label="Карточки мест">
-        <Cards cards={cards} />
+        <Card card={cards} />
       </section>
     </main>
   );
