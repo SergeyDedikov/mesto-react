@@ -10,7 +10,8 @@ function App() {
   const [isEditProfilePopupOpen, setEditProfilePopupOpen] =
     React.useState(false);
   const [isAddPlacePopupOpen, setAddPlacePopupOpen] = React.useState(false);
-  const [isConfirmationPopupOpen, setConfirmationPopupOpen] = React.useState(false);
+  const [isConfirmationPopupOpen, setConfirmationPopupOpen] =
+    React.useState(false);
 
   function handleEditAvatarClick() {
     setEditAvatarPopupOpen(true);
@@ -29,7 +30,6 @@ function App() {
     setEditProfilePopupOpen(false);
     setAddPlacePopupOpen(false);
     setConfirmationPopupOpen(false);
-    
   }
 
   return (
@@ -141,30 +141,7 @@ function App() {
         textButtonSubmit={"Да"}
         children={<></>}
       />
-      
-
-{/*       <template id="card-template">
-        <li>
-          <figure className="card">
-            <img className="card__photo" />
-            <figcaption className="card__info">
-              <h2 className="card__description"></h2>
-              <div className="card__likes-box">
-                <button
-                  className="card__button-like button"
-                  type="button"
-                ></button>
-                <p className="card__likes-count"></p>
-              </div>
-              <button
-                className="card__button-remove button"
-                type="button"
-              ></button>
-            </figcaption>
-          </figure>
-        </li>
-      </template>
- */}    </>
+    </>
   );
 }
 

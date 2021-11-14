@@ -20,7 +20,7 @@ function Main(props) {
       .catch((err) => {
         console.log(err);
       });
-  });
+  }, []);
 
   // -- Состояние карточек
   const [cards, setCards] = React.useState([]);
