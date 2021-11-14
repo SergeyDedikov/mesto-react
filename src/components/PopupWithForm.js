@@ -8,7 +8,7 @@ function PopupWithForm(props) {
   }
 
   function closePopup() {
-    popup.classList.toggle("popup_opened", false);
+    //popup.classList.toggle("popup_opened", false);
   }
 
   props.isOpen ? openPopup() : closePopup();

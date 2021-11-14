@@ -1,12 +1,33 @@
+import React from "react";
+import api from "../utils/api";
+
 function Main(props) {
-  
+  // --  Переменные состояния профиля
+  const [userName, setUserName] = React.useState();
+  const [userDescription, setUserDescription] = React.useState();
+  const [userAvatar, setUserAvatar] = React.useState();
+
+  React.useEffect(() => {
+    // -- Запрос данных с сервера
+    api
+      .getUserInfo()
+      .then((userData) => {
+        setUserName(userData.name);
+        setUserDescription(userData.about);
+        setUserAvatar(userData.avatar);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  });
+
   return (
     <main className="main">
       <section className="profile" aria-label="Профиль пользователя">
         <div className="profile__avatar-box">
           <img
             className="profile__avatar"
-            src="src"
+            src={userAvatar}
             alt="Аватар пользователя"
           />
           <button
@@ -16,13 +37,13 @@ function Main(props) {
           ></button>
         </div>
         <div className="profile__info">
-          <h1 className="profile__name">Жак-Ив Кусто</h1>
+          <h1 className="profile__name">{userName}</h1>
           <button
             onClick={props.onEditProfile}
             className="profile__button profile__button_type_edit button"
             type="button"
           ></button>
-          <p className="profile__job">Исследователь океана</p>
+          <p className="profile__job">{userDescription}</p>
         </div>
         <button
           onClick={props.onAddPlace}
