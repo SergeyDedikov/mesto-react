@@ -1,14 +1,123 @@
+import React from "react";
 import "../index.css";
 import Header from "./Header";
 import Main from "./Main";
 import Footer from "./Footer";
+import PopupWithForm from "./PopupWithForm";
 
 function App() {
+  const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = React.useState(false);
+  const [isEditProfilePopupOpen, setEditProfilePopupOpen] =
+    React.useState(false);
+  const [isAddPlacePopupOpen, setAddPlacePopupOpen] = React.useState(false);
+
+  function handleEditAvatarClick() {
+    setEditAvatarPopupOpen(true);
+  }
+
+  function handleEditProfileClick() {
+    setEditProfilePopupOpen(true);
+  }
+
+  function handleAddPlaceClick() {
+    setAddPlacePopupOpen(true);
+  }
+
   return (
     <>
-      <Header/>
-      <Main/>
-      <Footer/>
+      <Header />
+      <Main
+        onEditAvatar={() => handleEditAvatarClick()}
+        onEditProfile={() => handleEditProfileClick()}
+        onAddPlace={() => handleAddPlaceClick()}
+      />
+      <Footer />
+      <PopupWithForm
+        isOpen={isEditAvatarPopupOpen}
+        name={"edit-avatar"}
+        title={"Обновить аватар"}
+        children={
+          <fieldset className="popup__input-container">
+            <label className="popup__field">
+              <input
+                id="avatar"
+                className="popup__input popup__input_value_link"
+                type="url"
+                name="avatar"
+                placeholder="Ссылка на аватар"
+                required
+              />
+              <span id="avatar-error" className="popup__error"></span>
+            </label>
+          </fieldset>
+        }
+      />
+      <PopupWithForm
+        isOpen={isEditProfilePopupOpen}
+        name={"edit-profile"}
+        title={"Редактировать профиль"}
+        children={
+          <fieldset className="popup__input-container">
+            <label className="popup__field">
+              <input
+                id="name"
+                className="popup__input popup__input_value_name"
+                type="text"
+                name="name"
+                required
+                minLength="2"
+                maxLength="40"
+              />
+              <span id="name-error" className="popup__error"></span>
+            </label>
+            <label className="popup__field">
+              <input
+                id="job"
+                className="popup__input popup__input_value_job"
+                type="text"
+                name="job"
+                required
+                minLength="2"
+                maxLength="200"
+              />
+              <span id="job-error" className="popup__error"></span>
+            </label>
+          </fieldset>
+        }
+      />
+      <PopupWithForm
+        isOpen={isAddPlacePopupOpen}
+        name={"add-place"}
+        title={"Новое место"}
+        children={
+          <fieldset className="popup__input-container">
+            <label className="popup__field">
+              <input
+                id="place"
+                className="popup__input popup__input_value_place"
+                type="text"
+                name="place"
+                placeholder="Название"
+                required
+                minLength="2"
+                maxLength="30"
+              />
+              <span id="place-error" className="popup__error"></span>
+            </label>
+            <label className="popup__field">
+              <input
+                id="link"
+                className="popup__input popup__input_value_link"
+                type="url"
+                name="link"
+                placeholder="Ссылка на картинку"
+                required
+              />
+              <span id="link-error" className="popup__error"></span>
+            </label>
+          </fieldset>
+        }
+      />
 
       <div className="popup popup_type_edit-profile">
         <div className="popup__container popup__container_type_edit-profile">
@@ -159,8 +268,6 @@ function App() {
           </form>
         </div>
       </div>
-
-      
 
       <template id="card-template">
         <li>
