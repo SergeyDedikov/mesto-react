@@ -10,6 +10,7 @@ function App() {
   const [isEditProfilePopupOpen, setEditProfilePopupOpen] =
     React.useState(false);
   const [isAddPlacePopupOpen, setAddPlacePopupOpen] = React.useState(false);
+  const [isConfirmationPopupOpen, setConfirmationPopupOpen] = React.useState(false);
 
   function handleEditAvatarClick() {
     setEditAvatarPopupOpen(true);
@@ -23,7 +24,13 @@ function App() {
     setAddPlacePopupOpen(true);
   }
 
-  //function closeAllPopups() {}
+  function closeAllPopups() {
+    setEditAvatarPopupOpen(false);
+    setEditProfilePopupOpen(false);
+    setAddPlacePopupOpen(false);
+    setConfirmationPopupOpen(false);
+    
+  }
 
   return (
     <>
@@ -36,6 +43,7 @@ function App() {
       <Footer />
       <PopupWithForm
         isOpen={isEditAvatarPopupOpen}
+        onClose={() => closeAllPopups()}
         name={"edit-avatar"}
         title={"Обновить аватар"}
         textButtonSubmit={"Сохранить"}
@@ -57,6 +65,7 @@ function App() {
       />
       <PopupWithForm
         isOpen={isEditProfilePopupOpen}
+        onClose={() => closeAllPopups()}
         name={"edit-profile"}
         title={"Редактировать профиль"}
         textButtonSubmit={"Сохранить"}
@@ -91,6 +100,7 @@ function App() {
       />
       <PopupWithForm
         isOpen={isAddPlacePopupOpen}
+        onClose={() => closeAllPopups()}
         name={"add-place"}
         title={"Новое место"}
         textButtonSubmit={"Создать"}
@@ -124,7 +134,8 @@ function App() {
         }
       />
       <PopupWithForm
-        isOpen={false}
+        isOpen={isConfirmationPopupOpen}
+        onClose={() => closeAllPopups()}
         name={"confirmation"}
         title={"Вы уверены?"}
         textButtonSubmit={"Да"}

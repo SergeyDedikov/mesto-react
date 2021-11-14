@@ -1,10 +1,19 @@
 function PopupWithForm(props) {
-  if (props.isOpen) {
-    document
-      .querySelector(`.popup_type_${props.name}`)
-      .classList.add("popup_opened");
+
+  const popup = document
+  .querySelector(`.popup_type_${props.name}`);
+
+  function openPopup() {
+    popup.classList.toggle("popup_opened", true);
   }
 
+  function closePopup() {
+    popup.classList.toggle("popup_opened", false);
+  }
+
+  props.isOpen ? openPopup() : closePopup();
+  
+  
   return (
     <div className={`popup popup_type_${props.name}`}>
       <div className={`popup__container popup__container_type_${props.name}`}>
@@ -18,7 +27,11 @@ function PopupWithForm(props) {
           <button className="popup__button button" type="submit">
             {props.textButtonSubmit}
           </button>
-          <button className="popup__close button" type="button"></button>
+          <button
+            onClick={props.onClose}
+            className="popup__close button"
+            type="button"
+          ></button>
         </form>
       </div>
     </div>
