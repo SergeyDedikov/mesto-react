@@ -21,6 +21,20 @@ function Main(props) {
       });
   });
 
+  // -- Состояние карточек
+  const [cards, setCards] = React.useState([]);
+
+  React.useEffect(() => {
+    api
+      .getInitialCards()
+      .then((cardsData) => {
+        setCards(cardsData);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
   return (
     <main className="main">
       <section className="profile" aria-label="Профиль пользователя">
@@ -53,7 +67,29 @@ function Main(props) {
       </section>
 
       <section className="cards" aria-label="Карточки мест">
-        <ul className="cards__list"></ul>
+        <ul className="cards__list">
+          {cards.map((card, i) => (
+            <li key={card._id}>
+              <figure className="card">
+                <img className="card__photo" src={card.link} />
+                <figcaption className="card__info">
+                  <h2 className="card__description">{card.name}</h2>
+                  <div className="card__likes-box">
+                    <button
+                      className="card__button-like button"
+                      type="button"
+                    ></button>
+                    <p className="card__likes-count">{card.likes.length}</p>
+                  </div>
+                  <button
+                    className="card__button-remove button"
+                    type="button"
+                  ></button>
+                </figcaption>
+              </figure>
+            </li>
+          ))}
+        </ul>
       </section>
     </main>
   );

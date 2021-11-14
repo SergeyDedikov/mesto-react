@@ -143,7 +143,7 @@ function App() {
       />
       
 
-      <template id="card-template">
+{/*       <template id="card-template">
         <li>
           <figure className="card">
             <img className="card__photo" />
@@ -164,7 +164,7 @@ function App() {
           </figure>
         </li>
       </template>
-    </>
+ */}    </>
   );
 }
 
