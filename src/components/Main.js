@@ -71,7 +71,11 @@ function Main(props) {
           {cards.map((card, i) => (
             <li key={card._id}>
               <figure className="card">
-                <img className="card__photo" src={card.link} />
+                <img
+                  className="card__photo"
+                  src={card.link}
+                  alt={`На фотографии: ${card.name}`}
+                />
                 <figcaption className="card__info">
                   <h2 className="card__description">{card.name}</h2>
                   <div className="card__likes-box">
