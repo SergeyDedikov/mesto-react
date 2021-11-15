@@ -1,7 +1,7 @@
 function Card(props) {
   return (
     <ul className="cards__list">
-      {props.card.map((card, i) => (
+      {props.card.map((card) => (
         <li key={card._id}>
           <figure className="card">
             <img
