@@ -147,7 +147,7 @@ function App() {
         name={"confirmation"}
         title={"Вы уверены?"}
         textButtonSubmit={"Да"}
-        children={<></>}
+        children={null}
       />
       <ImagePopup card={selectedCard} onClose={() => closeAllPopups()} />
     </>
