@@ -1,4 +1,9 @@
 function Card(props) {
+
+  function handleClick(card) {
+    props.onCardClick(card);
+  }
+
   return (
     <ul className="cards__list">
       {props.card.map((card) => (
@@ -8,6 +13,7 @@ function Card(props) {
               className="card__photo"
               src={card.link}
               alt={`На фотографии: ${card.name}`}
+              onClick={() => handleClick(card)}
             />
             <figcaption className="card__info">
               <h2 className="card__description">{card.name}</h2>

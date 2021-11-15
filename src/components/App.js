@@ -4,6 +4,7 @@ import Header from "./Header";
 import Main from "./Main";
 import Footer from "./Footer";
 import PopupWithForm from "./PopupWithForm";
+import ImagePopup from "./ImagePopup";
 
 function App() {
   const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = React.useState(false);
@@ -12,6 +13,7 @@ function App() {
   const [isAddPlacePopupOpen, setAddPlacePopupOpen] = React.useState(false);
   const [isConfirmationPopupOpen, setConfirmationPopupOpen] =
     React.useState(false);
+  const [selectedCard, setSelectedCard] = React.useState(null);
 
   function handleEditAvatarClick() {
     setEditAvatarPopupOpen(true);
@@ -30,6 +32,11 @@ function App() {
     setEditProfilePopupOpen(false);
     setAddPlacePopupOpen(false);
     setConfirmationPopupOpen(false);
+    setSelectedCard(null);
+  }
+
+  function handleCardClick(card) {
+    setSelectedCard(card);
   }
 
   return (
@@ -39,6 +46,7 @@ function App() {
         onEditAvatar={() => handleEditAvatarClick()}
         onEditProfile={() => handleEditProfileClick()}
         onAddPlace={() => handleAddPlaceClick()}
+        onCardClick={(card) => handleCardClick(card)}
       />
       <Footer />
       <PopupWithForm
@@ -141,6 +149,7 @@ function App() {
         textButtonSubmit={"Да"}
         children={<></>}
       />
+      <ImagePopup card={selectedCard} onClose={() => closeAllPopups()} />
     </>
   );
 }

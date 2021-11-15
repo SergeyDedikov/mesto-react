@@ -56,7 +56,7 @@ function Main(props) {
       </section>
 
       <section className="cards" aria-label="Карточки мест">
-        <Card card={cards} />
+        <Card card={cards} onCardClick={(card) => props.onCardClick(card)} />
       </section>
     </main>
   );
