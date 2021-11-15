@@ -3,33 +3,21 @@ import api from "../utils/api";
 import Card from "./Card";
 
 function Main(props) {
-  // --  Переменные состояния профиля
+  // -- Переменные состояния профиля
   const [userName, setUserName] = React.useState();
   const [userDescription, setUserDescription] = React.useState();
   const [userAvatar, setUserAvatar] = React.useState();
-
-  React.useEffect(() => {
-    // -- Запрос данных с сервера
-    api
-      .getUserInfo()
-      .then((userData) => {
-        setUserName(userData.name);
-        setUserDescription(userData.about);
-        setUserAvatar(userData.avatar);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
-
   // -- Состояние карточек
   const [cards, setCards] = React.useState([]);
 
   React.useEffect(() => {
-    api
-      .getInitialCards()
-      .then((cardsData) => {
-        setCards(cardsData);
+    // -- Запрос данных с сервера
+    Promise.all([api.getUserInfo(), api.getInitialCards()])
+      .then(([user, cards]) => {
+        setUserName(user.name);
+        setUserDescription(user.about);
+        setUserAvatar(user.avatar);
+        setCards(cards);
       })
       .catch((err) => {
         console.log(err);
