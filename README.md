@@ -71,6 +71,12 @@ function ImagePopup({ card, onClose }) {
           alt={card ? `На фотографии: ${card.name}` : ""}
         />
         ...
+        <button
+          onClick={onClose}
+          className="popup__close popup__close_card button"
+          type="button"
+        ></button>
 ```
 
 ---
+Проект ещё не полностью функционален — это задача следующей практической работы.
