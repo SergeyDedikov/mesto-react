@@ -1,70 +1,76 @@
-# mesto-react with Create React App
+# Практическая работа №10: Место
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+- Описание
+- Особенности
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+**Описание**
 
-### `npm start`
+Практическая работа №10 курса "Веб-разработчик" Яндекс.Практикума — портирование проекта **"Место"** на платформу **React**.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+---
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+**Особенности**
 
-### `npm test`
+Освоили CRA: развёртывание нашего проекта на основе шаблона React. В этой работе мы познакомились с новым синтаксисом JSX, применили функциональные компоненты и хуки.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Теперь проект практически полностью написан в JS — разметка html перекочевала в JS-компоненты с определёнными пропсами:
 
-### `npm run build`
+```javascript
+<>
+  <Header />
+  <Main
+    onEditAvatar={() => handleEditAvatarClick()}
+    onEditProfile={() => handleEditProfileClick()}
+    onAddPlace={() => handleAddPlaceClick()}
+    onCardClick={(card) => handleCardClick(card)}
+  />
+  <Footer />
+  <PopupWithForm isOpen={isEditAvatarPopupOpen} />
+  <ImagePopup card={selectedCard} onClose={() => closeAllPopups()} />
+</>
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+В самих компонентах добавились переменные состояния и "эффекты", меняющие эти переменные:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```javascript
+function Main(props) {
+  // -- Переменные состояния профиля
+  const [userName, setUserName] = React.useState('');
+  const [userDescription, setUserDescription] = React.useState('');
+  const [userAvatar, setUserAvatar] = React.useState('');
+  // -- Состояние карточек
+  const [cards, setCards] = React.useState([]);
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+  React.useEffect(() => {
+    // -- Запрос данных с сервера
+    Promise.all([api.getUserInfo(), api.getInitialCards()])
+      .then(([user, cards]) => {
+        setUserName(user.name);
+        setUserDescription(user.about);
+        setUserAvatar(user.avatar);
+        setCards(cards);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+```
 
-### `npm run eject`
+Передаваемые в компонент "пропсы" теперь удобно вставлять в разметку в качестве переменных и методов:
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+```javascript
+function ImagePopup({ card, onClose }) {
+  return (
+    <div className={`popup popup_type_card ${card && "popup_opened"}`}>
+      <figure className="popup__card">
+        <img
+          className="popup__card-image"
+          src={card ? card.link : ""}
+          alt={card ? `На фотографии: ${card.name}` : ""}
+        />
+        ...
+```
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+---
