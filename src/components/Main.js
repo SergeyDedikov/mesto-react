@@ -4,9 +4,9 @@ import Card from "./Card";
 
 function Main(props) {
   // -- Переменные состояния профиля
-  const [userName, setUserName] = React.useState('');
-  const [userDescription, setUserDescription] = React.useState('');
-  const [userAvatar, setUserAvatar] = React.useState('');
+  const [userName, setUserName] = React.useState("");
+  const [userDescription, setUserDescription] = React.useState("");
+  const [userAvatar, setUserAvatar] = React.useState("");
   // -- Состояние карточек
   const [cards, setCards] = React.useState([]);
 
@@ -56,7 +56,16 @@ function Main(props) {
       </section>
 
       <section className="cards" aria-label="Карточки мест">
-        <Card card={cards} onCardClick={(card) => props.onCardClick(card)} />
+        <ul className="cards__list">
+          {cards.map((cardItem) => (
+            <li key={cardItem._id}>
+              <Card
+                card={cardItem}
+                onCardClick={(card) => props.onCardClick(card)}
+              />
+            </li>
+          ))}
+        </ul>
       </section>
     </main>
   );
