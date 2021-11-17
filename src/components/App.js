@@ -44,15 +44,15 @@ function App() {
     <>
       <Header />
       <Main
-        onEditAvatar={() => handleEditAvatarClick()}
-        onEditProfile={() => handleEditProfileClick()}
-        onAddPlace={() => handleAddPlaceClick()}
+        onEditAvatar={handleEditAvatarClick}
+        onEditProfile={handleEditProfileClick}
+        onAddPlace={handleAddPlaceClick}
         onCardClick={(card) => handleCardClick(card)}
       />
       <Footer />
       <PopupWithForm
         isOpen={isEditAvatarPopupOpen}
-        onClose={() => closeAllPopups()}
+        onClose={closeAllPopups}
         name={"edit-avatar"}
         title={"Обновить аватар"}
         textButtonSubmit={"Сохранить"}
@@ -74,7 +74,7 @@ function App() {
       />
       <PopupWithForm
         isOpen={isEditProfilePopupOpen}
-        onClose={() => closeAllPopups()}
+        onClose={closeAllPopups}
         name={"edit-profile"}
         title={"Редактировать профиль"}
         textButtonSubmit={"Сохранить"}
@@ -109,7 +109,7 @@ function App() {
       />
       <PopupWithForm
         isOpen={isAddPlacePopupOpen}
-        onClose={() => closeAllPopups()}
+        onClose={closeAllPopups}
         name={"add-place"}
         title={"Новое место"}
         textButtonSubmit={"Создать"}
@@ -144,13 +144,13 @@ function App() {
       />
       <PopupWithForm
         isOpen={isConfirmationPopupOpen}
-        onClose={() => closeAllPopups()}
+        onClose={closeAllPopups}
         name={"confirmation"}
         title={"Вы уверены?"}
         textButtonSubmit={"Да"}
         children={null}
       />
-      <ImagePopup card={selectedCard} onClose={() => closeAllPopups()} />
+      <ImagePopup card={selectedCard} onClose={closeAllPopups} />
     </>
   );
 }
