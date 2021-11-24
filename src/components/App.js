@@ -1,4 +1,6 @@
 import React, {useState, useEffect} from "react";
+import { CurentUserContext } from "../contexts/CurrentUserContext";
+
 import "../index.css";
 import api from "../utils/api";
 import Header from "./Header";
@@ -6,7 +8,7 @@ import Main from "./Main";
 import Footer from "./Footer";
 import PopupWithForm from "./PopupWithForm";
 import ImagePopup from "./ImagePopup";
-import { CurentUserContext } from "../contexts/CurrentUserContext";
+import EditProfilePopup from './EditProfilePopup';
 
 function App() {
   // -- Переменная состояния профиля
@@ -89,40 +91,8 @@ function App() {
           </label>
         </fieldset>
       </PopupWithForm>
-      <PopupWithForm
-        isOpen={isEditProfilePopupOpen}
-        onClose={closeAllPopups}
-        name={"edit-profile"}
-        title={"Редактировать профиль"}
-        textButtonSubmit={"Сохранить"}
-      >
-        <fieldset className="popup__input-container">
-          <label className="popup__field">
-            <input
-              id="name"
-              className="popup__input popup__input_value_name"
-              type="text"
-              name="name"
-              required
-              minLength="2"
-              maxLength="40"
-            />
-            <span id="name-error" className="popup__error"></span>
-          </label>
-          <label className="popup__field">
-            <input
-              id="job"
-              className="popup__input popup__input_value_job"
-              type="text"
-              name="job"
-              required
-              minLength="2"
-              maxLength="200"
-            />
-            <span id="job-error" className="popup__error"></span>
-          </label>
-        </fieldset>
-      </PopupWithForm>
+      <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} />
+
       <PopupWithForm
         isOpen={isAddPlacePopupOpen}
         onClose={closeAllPopups}
