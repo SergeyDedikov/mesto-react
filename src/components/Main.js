@@ -7,7 +7,6 @@ function Main(props) {
   // подписываемся на контекст
   const currentUser = React.useContext(CurentUserContext);
 
-
   // -- Состояние карточек
   const [cards, setCards] = React.useState([]);
 
@@ -15,13 +14,24 @@ function Main(props) {
     // -- Запрос данных с сервера
     Promise.all([api.getUserInfo(), api.getInitialCards()])
       .then(([user, cards]) => {
-
         setCards(cards);
       })
       .catch((err) => {
         console.log(err);
       });
   }, []);
+
+  // -- Лайки, лайки, лайки
+
+  function handleCardLike(card) {
+    // Снова проверяем, есть ли уже лайк на этой карточке
+    const isLiked = card.likes.some((i) => i._id === currentUser._id);
+
+    // Отправляем запрос в API и получаем обновлённые данные карточки
+    api.changeLikeCardStatus(card._id, !isLiked).then((newCard) => {
+      setCards((state) => state.map((c) => (c._id === card._id ? newCard : c)));
+    });
+  }
 
   return (
     <main className="main">
@@ -61,6 +71,7 @@ function Main(props) {
               <Card
                 card={cardItem}
                 onCardClick={(card) => props.onCardClick(card)}
+                onCardLike={card => handleCardLike(card)}
               />
             </li>
           ))}

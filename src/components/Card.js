@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { CurentUserContext } from "../contexts/CurrentUserContext";
 
-function Card({ card, onCardClick }) {
+function Card({ card, onCardClick, onCardLike }) {
   const currentUser = useContext(CurentUserContext);
 
   // Определяем, являемся ли мы владельцем текущей карточки
@@ -24,6 +24,10 @@ function Card({ card, onCardClick }) {
     onCardClick(card);
   }
 
+  function handleLikeClick() {
+    onCardLike(card);
+  }
+
   return (
     <figure className="card">
       <img
@@ -38,6 +42,7 @@ function Card({ card, onCardClick }) {
           <button
             className={`${cardLikeButtonClassName} button`}
             type="button"
+            onClick={handleLikeClick}
           ></button>
           <p className="card__likes-count">{card.likes.length}</p>
         </div>
