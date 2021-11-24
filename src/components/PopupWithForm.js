@@ -8,6 +8,7 @@ function PopupWithForm(props) {
     >
       <div className={`popup__container popup__container_type_${props.name}`}>
         <form
+          onSubmit={props.onSubmit}
           name={`${props.name}`}
           className={`popup__form popup__form_${props.name}`}
         >

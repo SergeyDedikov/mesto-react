@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { CurentUserContext } from "../contexts/CurrentUserContext";
 
 import "../index.css";
@@ -8,7 +8,7 @@ import Main from "./Main";
 import Footer from "./Footer";
 import PopupWithForm from "./PopupWithForm";
 import ImagePopup from "./ImagePopup";
-import EditProfilePopup from './EditProfilePopup';
+import EditProfilePopup from "./EditProfilePopup";
 
 function App() {
   // -- Переменная состояния профиля
@@ -26,6 +26,18 @@ function App() {
         console.log(err);
       });
   }, []);
+
+  function handleUpdateUser(dataUser) {
+    api
+      .setUserInfo(dataUser)
+      .then((newUser) => {
+        setCurrentUser(newUser);
+        closeAllPopups();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
 
   // -- Переменные состояния попапов
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
@@ -91,7 +103,11 @@ function App() {
           </label>
         </fieldset>
       </PopupWithForm>
-      <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} />
+      <EditProfilePopup
+        isOpen={isEditProfilePopupOpen}
+        onClose={closeAllPopups}
+        onUpdateUser={(dataUser) => handleUpdateUser(dataUser)}
+      />
 
       <PopupWithForm
         isOpen={isAddPlacePopupOpen}

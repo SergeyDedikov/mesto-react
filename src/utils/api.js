@@ -49,13 +49,13 @@ class Api {
     }).then(this._checkResult);
   }
 
-  setUserInfo(userData) {
+  setUserInfo({ name, about }) {
     return fetch(`${this._apiUrl}/v1/${this._cohortId}/users/me`, {
       method: "PATCH",
       headers: this._headers,
       body: JSON.stringify({
-        name: userData.name,
-        about: userData.job,
+        name,
+        about,
       }),
     }).then(this._checkResult);
   }
