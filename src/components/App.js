@@ -6,6 +6,7 @@ import Main from "./Main";
 import Footer from "./Footer";
 import PopupWithForm from "./PopupWithForm";
 import ImagePopup from "./ImagePopup";
+import { CurentUserContext } from "../contexts/CurrentUserContext";
 
 function App() {
   // -- Переменная состояния профиля
@@ -16,6 +17,7 @@ function App() {
     Promise.all([api.getUserInfo(), api.getInitialCards()])
       .then(([user, cards]) => {
         setCurrentUser(user);
+
         //setCards(cards);
       })
       .catch((err) => {
@@ -57,7 +59,7 @@ function App() {
   }
 
   return (
-    <>
+    <CurentUserContext.Provider value={currentUser}>
       <Header />
       <Main
         onEditAvatar={handleEditAvatarClick}
@@ -163,7 +165,7 @@ function App() {
         textButtonSubmit={"Да"}
       />
       <ImagePopup card={selectedCard} onClose={closeAllPopups} />
-    </>
+    </CurentUserContext.Provider>
   );
 }
 

@@ -1,12 +1,13 @@
 import React from "react";
 import api from "../utils/api";
 import Card from "./Card";
+import { CurentUserContext } from "../contexts/CurrentUserContext";
 
 function Main(props) {
-  // -- Переменные состояния профиля
-  const [userName, setUserName] = React.useState("");
-  const [userDescription, setUserDescription] = React.useState("");
-  const [userAvatar, setUserAvatar] = React.useState("");
+  // подписываемся на контекст
+  const currentUser = React.useContext(CurentUserContext);
+
+
   // -- Состояние карточек
   const [cards, setCards] = React.useState([]);
 
@@ -14,9 +15,7 @@ function Main(props) {
     // -- Запрос данных с сервера
     Promise.all([api.getUserInfo(), api.getInitialCards()])
       .then(([user, cards]) => {
-        setUserName(user.name);
-        setUserDescription(user.about);
-        setUserAvatar(user.avatar);
+
         setCards(cards);
       })
       .catch((err) => {
@@ -30,7 +29,7 @@ function Main(props) {
         <div className="profile__avatar-box">
           <img
             className="profile__avatar"
-            src={userAvatar}
+            src={currentUser.avatar}
             alt="Аватар пользователя"
           />
           <button
@@ -40,13 +39,13 @@ function Main(props) {
           ></button>
         </div>
         <div className="profile__info">
-          <h1 className="profile__name">{userName}</h1>
+          <h1 className="profile__name">{currentUser.name}</h1>
           <button
             onClick={props.onEditProfile}
             className="profile__button profile__button_type_edit button"
             type="button"
           ></button>
-          <p className="profile__job">{userDescription}</p>
+          <p className="profile__job">{currentUser.about}</p>
         </div>
         <button
           onClick={props.onAddPlace}
