@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from "react";
 import "../index.css";
+import api from "../utils/api";
 import Header from "./Header";
 import Main from "./Main";
 import Footer from "./Footer";
@@ -8,7 +9,19 @@ import ImagePopup from "./ImagePopup";
 
 function App() {
   // -- Переменная состояния профиля
-  //const [currentUser, setCurrentUser] = React.useState({});
+  const [currentUser, setCurrentUser] = useState({});
+
+  useEffect(() => {
+    // -- Запрос данных с сервера
+    Promise.all([api.getUserInfo(), api.getInitialCards()])
+      .then(([user, cards]) => {
+        setCurrentUser(user);
+        //setCards(cards);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
   // -- Переменные состояния попапов
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
