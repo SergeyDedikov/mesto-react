@@ -71,32 +71,32 @@ class Api {
     }).then(this._checkResult);
   }
 
-  deleteCard(cardData) {
-    return fetch(`${this._apiUrl}/v1/${this._cohortId}/cards/${cardData._id}`, {
+  deleteCard(card) {
+    return fetch(`${this._apiUrl}/v1/${this._cohortId}/cards/${card._id}`, {
       method: "DELETE",
       headers: this._headers,
     }).then(this._checkResult);
   }
 
-  _addLike(cardId) {
-    return fetch(`${this._apiUrl}/v1/${this._cohortId}/cards/likes/${cardId}`, {
+  _addLike(card) {
+    return fetch(`${this._apiUrl}/v1/${this._cohortId}/cards/likes/${card._id}`, {
       method: "PUT",
       headers: this._headers,
     }).then(this._checkResult);
   }
 
-  _deleteLike(cardId) {
-    return fetch(`${this._apiUrl}/v1/${this._cohortId}/cards/likes/${cardId}`, {
+  _deleteLike(card) {
+    return fetch(`${this._apiUrl}/v1/${this._cohortId}/cards/likes/${card._id}`, {
       method: "DELETE",
       headers: this._headers,
     }).then(this._checkResult);
   }
 
-  changeLikeCardStatus(cardId, isLiked) {
+  changeLikeCardStatus(card, isLiked) {
     if (isLiked) {
-      return this._addLike(cardId);
+      return this._addLike(card);
     } else {
-      return this._deleteLike(cardId);
+      return this._deleteLike(card);
     }
   }
 }
