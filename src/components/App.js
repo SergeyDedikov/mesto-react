@@ -15,22 +15,49 @@ function App() {
   // -- Переменная состояния профиля
   const [currentUser, setCurrentUser] = useState({});
 
+  // -- Состояние карточек
+  const [cards, setCards] = useState([]);
+
   useEffect(() => {
     // -- Запрос данных с сервера
-    Promise.all([api.getUserInfo(), api.getInitialCards()])
-      .then(([user, cards]) => {
-        setCurrentUser(user);
-
-        //setCards(cards);
+    Promise.all([api.getUserInfo(), api.getCardList()])
+      .then(([userData, cardsData]) => {
+        setCurrentUser(userData);
+        setCards(cardsData);
       })
       .catch((err) => {
         console.log(err);
       });
   }, []);
 
-  function handleUpdateUser(dataUser) {
+  // -- Лайки, лайки, лайки
+
+  function handleCardLike(card) {
+    // Проверяем, есть ли уже лайк на этой карточке
+    const isLiked = card.likes.some((i) => i._id === currentUser._id);
+
+    // Отправляем запрос в API и получаем обновлённые данные карточки
+    api.changeLikeCardStatus(card._id, !isLiked).then((newCard) => {
+      setCards((state) => state.map((c) => (c._id === card._id ? newCard : c)));
+    });
+  }
+
+  // -- Удаление карточки
+
+  function handleCardDelete(card) {
     api
-      .setUserInfo(dataUser)
+      .deleteCard(card)
+      .then(() => {
+        setCards((state) => state.filter((c) => c._id !== card._id));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
+  function handleUpdateUser(userData) {
+    api
+      .setUserInfo(userData)
       .then((newUser) => {
         setCurrentUser(newUser);
         closeAllPopups();
@@ -92,7 +119,10 @@ function App() {
         onEditAvatar={handleEditAvatarClick}
         onEditProfile={handleEditProfileClick}
         onAddPlace={handleAddPlaceClick}
+        cards={cards}
         onCardClick={(card) => handleCardClick(card)}
+        onCardLike={(card) => handleCardLike(card)}
+        onCardDelete={(card) => handleCardDelete(card)}
       />
       <Footer />
       <EditAvatarPopup
@@ -103,7 +133,7 @@ function App() {
       <EditProfilePopup
         isOpen={isEditProfilePopupOpen}
         onClose={closeAllPopups}
-        onUpdateUser={(dataUser) => handleUpdateUser(dataUser)}
+        onUpdateUser={(userData) => handleUpdateUser(userData)}
       />
 
       <PopupWithForm

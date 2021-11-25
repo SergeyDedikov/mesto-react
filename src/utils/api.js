@@ -25,7 +25,7 @@ class Api {
     }
   };
 
-  getInitialCards() {
+  getCardList() {
     return fetch(`${this._apiUrl}/v1/${this._cohortId}/cards`, {
       method: "GET",
       headers: this._headers,
