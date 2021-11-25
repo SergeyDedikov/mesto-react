@@ -14,6 +14,12 @@ function AddPlacePopup(props) {
     });
   }
 
+  // Очищаем поля ввода после отправки
+  if (props.isSubmitted) {
+    cardName.current.value = '';
+    cardLink.current.value = '';
+  }
+
   return (
     <PopupWithForm
       isOpen={props.isOpen}

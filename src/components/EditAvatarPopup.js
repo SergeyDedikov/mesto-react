@@ -13,6 +13,10 @@ function EditAvatarPopup(props) {
     });
   }
 
+  if (props.isSubmitted) {
+    avatarRef.current.value = '';
+  }
+
   return (
     <PopupWithForm
       isOpen={props.isOpen}

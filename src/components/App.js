@@ -18,9 +18,18 @@ function App() {
 
   // -- Состояние карточек
   const [cards, setCards] = useState([]);
+  // -- Переменная состояния выбранной карточки
+  const [selectedCard, setSelectedCard] = useState(null);
 
+  // -- Переменные состояния попапов
+  const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
+  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
+  const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
+  const [isConfirmationPopupOpen, setIsConfirmationPopupOpen] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+
+  // -- Запрос данных с сервера
   useEffect(() => {
-    // -- Запрос данных с сервера
     Promise.all([api.getUserInfo(), api.getCardList()])
       .then(([userData, cardsData]) => {
         setCurrentUser(userData);
@@ -53,6 +62,8 @@ function App() {
       .then((newUser) => {
         setCurrentUser(newUser);
         closeAllPopups();
+        // сброс полей ввода формы
+        setIsSubmitted(true);
       })
       .catch((err) => {
         console.log(err);
@@ -92,20 +103,14 @@ function App() {
       .then((newCard) => {
         setCards([newCard, ...cards]);
         closeAllPopups();
+        setIsSubmitted(true);
       })
       .catch((err) => {
         console.log(err);
       });
   }
 
-  // -- Переменные состояния попапов
-  const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
-  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
-  const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
-  const [isConfirmationPopupOpen, setIsConfirmationPopupOpen] = useState(false);
-
-  // -- Переменная состояния выбранной карточки
-  const [selectedCard, setSelectedCard] = useState(null);
+  // -- Функции попапов
 
   function handleEditAvatarClick() {
     setIsEditAvatarPopupOpen(true);
@@ -148,6 +153,7 @@ function App() {
         isOpen={isEditAvatarPopupOpen}
         onClose={closeAllPopups}
         onUpdateAvatar={(avatar) => handleUpdateAvatar(avatar)}
+        isSubmitted={isSubmitted}
       />
       <EditProfilePopup
         isOpen={isEditProfilePopupOpen}
@@ -158,6 +164,7 @@ function App() {
         isOpen={isAddPlacePopupOpen}
         onClose={closeAllPopups}
         onAddPlace={(cardData) => handleAddPlaceSubmit(cardData)}
+        isSubmitted={isSubmitted}
       />
       <PopupWithForm
         isOpen={isConfirmationPopupOpen}
