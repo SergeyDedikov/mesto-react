@@ -43,9 +43,9 @@ function Main(props) {
             <li key={cardItem._id}>
               <Card
                 card={cardItem}
-                onCardClick={(card) => props.onCardClick(card)}
-                onCardLike={(card) => props.onCardLike(card)}
-                onCardDelete={(card) => props.onCardDelete(card)}
+                onCardClick={props.onCardClick}
+                onCardLike={props.onCardLike}
+                onCardDelete={props.onCardDelete}
               />
             </li>
           ))}
