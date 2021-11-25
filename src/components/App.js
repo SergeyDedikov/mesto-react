@@ -87,8 +87,9 @@ function App() {
   function handleCardDelete(card) {
     api
       .deleteCard(card)
-      .then(() => {
+      .then((res) => {
         setCards((state) => state.filter((c) => c._id !== card._id));
+        alert(res.message);
       })
       .catch((err) => {
         console.log(err);
