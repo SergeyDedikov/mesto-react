@@ -60,13 +60,13 @@ class Api {
     }).then(this._checkResult);
   }
 
-  addNewCard(cardData) {
+  addNewCard({ name, link }) {
     return fetch(`${this._apiUrl}/v1/${this._cohortId}/cards`, {
       method: "POST",
       headers: this._headers,
       body: JSON.stringify({
-        name: cardData.name,
-        link: cardData.link,
+        name,
+        link,
       }),
     }).then(this._checkResult);
   }

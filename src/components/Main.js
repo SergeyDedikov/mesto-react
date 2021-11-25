@@ -1,6 +1,6 @@
 import { useContext } from "react";
-import Card from "./Card";
 import { CurentUserContext } from "../contexts/CurrentUserContext";
+import Card from "./Card";
 
 function Main(props) {
   // -- Подписываемся на контекст

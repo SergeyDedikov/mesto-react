@@ -10,6 +10,7 @@ import PopupWithForm from "./PopupWithForm";
 import ImagePopup from "./ImagePopup";
 import EditProfilePopup from "./EditProfilePopup";
 import EditAvatarPopup from "./EditAvatarPopup";
+import AddPlacePopup from "./AddPlacePopup";
 
 function App() {
   // -- Переменная состояния профиля
@@ -55,6 +56,8 @@ function App() {
       });
   }
 
+  // -- Обновление профиля
+
   function handleUpdateUser(userData) {
     api
       .setUserInfo(userData)
@@ -67,11 +70,27 @@ function App() {
       });
   }
 
+  // -- Обновление аватара
+
   function handleUpdateAvatar(avatar) {
     api
       .setUserAvatar(avatar)
       .then((newUser) => {
         setCurrentUser(newUser);
+        closeAllPopups();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
+  // -- Добавление новой карточки
+
+  function handleAddPlaceSubmit(cardData) {
+    api
+      .addNewCard(cardData)
+      .then((newCard) => {
+        setCards([newCard, ...cards]);
         closeAllPopups();
       })
       .catch((err) => {
@@ -135,41 +154,11 @@ function App() {
         onClose={closeAllPopups}
         onUpdateUser={(userData) => handleUpdateUser(userData)}
       />
-
-      <PopupWithForm
+      <AddPlacePopup
         isOpen={isAddPlacePopupOpen}
         onClose={closeAllPopups}
-        name={"add-place"}
-        title={"Новое место"}
-        textButtonSubmit={"Создать"}
-      >
-        <fieldset className="popup__input-container">
-          <label className="popup__field">
-            <input
-              id="place"
-              className="popup__input popup__input_value_place"
-              type="text"
-              name="place"
-              placeholder="Название"
-              required
-              minLength="2"
-              maxLength="30"
-            />
-            <span id="place-error" className="popup__error"></span>
-          </label>
-          <label className="popup__field">
-            <input
-              id="link"
-              className="popup__input popup__input_value_link"
-              type="url"
-              name="link"
-              placeholder="Ссылка на картинку"
-              required
-            />
-            <span id="link-error" className="popup__error"></span>
-          </label>
-        </fieldset>
-      </PopupWithForm>
+        onAddPlace={(cardData) => handleAddPlaceSubmit(cardData)}
+      />
       <PopupWithForm
         isOpen={isConfirmationPopupOpen}
         onClose={closeAllPopups}
