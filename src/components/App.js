@@ -9,6 +9,7 @@ import Footer from "./Footer";
 import PopupWithForm from "./PopupWithForm";
 import ImagePopup from "./ImagePopup";
 import EditProfilePopup from "./EditProfilePopup";
+import EditAvatarPopup from "./EditAvatarPopup";
 
 function App() {
   // -- Переменная состояния профиля
@@ -32,6 +33,18 @@ function App() {
       .setUserInfo(dataUser)
       .then((newUser) => {
         setCurrentUser(newUser);
+        closeAllPopups();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
+  function handleUpdateAvatar(avatar) {
+    api
+      .setUserAvatar(avatar)
+      .then(() => {
+        console.log(currentUser);
         closeAllPopups();
       })
       .catch((err) => {
@@ -82,27 +95,11 @@ function App() {
         onCardClick={(card) => handleCardClick(card)}
       />
       <Footer />
-      <PopupWithForm
+      <EditAvatarPopup
         isOpen={isEditAvatarPopupOpen}
         onClose={closeAllPopups}
-        name={"edit-avatar"}
-        title={"Обновить аватар"}
-        textButtonSubmit={"Сохранить"}
-      >
-        <fieldset className="popup__input-container">
-          <label className="popup__field">
-            <input
-              id="avatar"
-              className="popup__input popup__input_value_link"
-              type="url"
-              name="avatar"
-              placeholder="Ссылка на аватар"
-              required
-            />
-            <span id="avatar-error" className="popup__error"></span>
-          </label>
-        </fieldset>
-      </PopupWithForm>
+        onUpdateAvatar={(avatar) => handleUpdateAvatar(avatar)}
+      />
       <EditProfilePopup
         isOpen={isEditProfilePopupOpen}
         onClose={closeAllPopups}

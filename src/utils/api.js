@@ -39,12 +39,12 @@ class Api {
     }).then(this._checkResult);
   }
 
-  changeAvatar(cardData) {
+  setUserAvatar({ avatar }) {
     return fetch(`${this._apiUrl}/v1/${this._cohortId}/users/me/avatar`, {
       method: "PATCH",
       headers: this._headers,
       body: JSON.stringify({
-        avatar: cardData.avatar,
+        avatar,
       }),
     }).then(this._checkResult);
   }
