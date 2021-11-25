@@ -10,7 +10,8 @@ function EditProfilePopup(props) {
   const [description, setDescription] = useState("");
 
   useEffect(() => {
-    if (props.isOpen) {
+    // Применяем эффект, когда попап открыт и есть данные
+    if (currentUser && props.isOpen) {
       setName(currentUser.name);
       setDescription(currentUser.about);
     }
