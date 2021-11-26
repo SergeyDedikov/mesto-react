@@ -1,4 +1,5 @@
 import { useRef } from "react";
+import { useEffect } from "react/cjs/react.development";
 import PopupWithForm from "./PopupWithForm";
 
 function AddPlacePopup(props) {
@@ -13,12 +14,14 @@ function AddPlacePopup(props) {
       link: cardLink.current.value,
     });
   }
-
-  // Очищаем поля ввода после отправки
-  if (props.isSubmitted) {
-    cardName.current.value = '';
-    cardLink.current.value = '';
-  }
+  
+  useEffect(() => {
+    // Очищаем поля ввода после отправки
+    if (props.isSubmitted) {
+      cardName.current.value = "";
+      cardLink.current.value = "";
+    }
+  }, [props.isSubmitted]);
 
   return (
     <PopupWithForm

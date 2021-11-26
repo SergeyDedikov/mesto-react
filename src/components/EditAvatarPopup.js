@@ -1,4 +1,5 @@
 import { useRef } from "react";
+import { useEffect } from "react/cjs/react.development";
 
 import PopupWithForm from "./PopupWithForm";
 
@@ -13,9 +14,11 @@ function EditAvatarPopup(props) {
     });
   }
 
-  if (props.isSubmitted) {
-    avatarRef.current.value = '';
-  }
+  useEffect(() => {
+    if (props.isSubmitted) {
+      avatarRef.current.value = "";
+    }
+  }, [props.isSubmitted]);
 
   return (
     <PopupWithForm

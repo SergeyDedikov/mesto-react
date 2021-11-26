@@ -6,7 +6,10 @@ function PopupWithForm(props) {
   useEffect(() => {
     const formValidator = new FormValidator(validConfig, props.name);
     formValidator.enableValidation();
-  }, [props.name]);
+    if (props.isOpen) {
+      formValidator.resetValidation();
+    };
+  }, [props.name, props.isOpen]);
 
   return (
     <div

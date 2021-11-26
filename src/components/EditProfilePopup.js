@@ -11,11 +11,11 @@ function EditProfilePopup(props) {
 
   useEffect(() => {
     // Получаем данные пользователя для полей формы
-    if (currentUser) {
+    if (currentUser && props.isOpen) {
       setName(currentUser.name);
       setDescription(currentUser.about);
     }
-  }, [currentUser]);
+  }, [currentUser, props.isOpen]);
 
   function handleChangeName(e) {
     setName(e.target.value);
@@ -50,6 +50,7 @@ function EditProfilePopup(props) {
             value={name}
             onChange={handleChangeName}
             id="name"
+            placeholder="Имя"
             className="popup__input popup__input_value_name"
             type="text"
             name="name"
@@ -64,6 +65,7 @@ function EditProfilePopup(props) {
             value={description}
             onChange={handleChangeDescription}
             id="job"
+            placeholder="О себе"
             className="popup__input popup__input_value_job"
             type="text"
             name="job"
