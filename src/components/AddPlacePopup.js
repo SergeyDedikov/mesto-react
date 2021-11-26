@@ -27,7 +27,7 @@ function AddPlacePopup(props) {
       onSubmit={handleSubmit}
       name={"add-place"}
       title={"Новое место"}
-      textButtonSubmit={"Создать"}
+      textButtonSubmit={props.isLoading ? "Сохранение..." : "Создать"}
     >
       <fieldset className="popup__input-container">
         <label className="popup__field">

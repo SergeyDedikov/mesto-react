@@ -24,7 +24,7 @@ function EditAvatarPopup(props) {
       onSubmit={handleSubmit}
       name={"edit-avatar"}
       title={"Обновить аватар"}
-      textButtonSubmit={"Сохранить"}
+      textButtonSubmit={props.isLoading ? "Сохранение..." : "Сохранить"}
     >
       <fieldset className="popup__input-container">
         <label className="popup__field">

@@ -26,7 +26,9 @@ function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
   const [isConfirmationPopupOpen, setIsConfirmationPopupOpen] = useState(false);
+  // -- Переменные состояний отправки данных
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   // -- Запрос данных с сервера
   useEffect(() => {
@@ -43,6 +45,7 @@ function App() {
   // -- Обновление профиля
 
   function handleUpdateUser(userData) {
+    setIsLoading(true);
     api
       .setUserInfo(userData)
       .then((newUser) => {
@@ -51,22 +54,30 @@ function App() {
       })
       .catch((err) => {
         console.log(err);
+      })
+      .finally(() => {
+        // сброс текста кнопки Submit
+        setIsLoading(false);
       });
   }
 
   // -- Обновление аватара
 
   function handleUpdateAvatar(avatar) {
+    setIsLoading(true);
     api
       .setUserAvatar(avatar)
       .then((newUser) => {
         setCurrentUser(newUser);
         closeAllPopups();
-        // сброс полей ввода формы
-        setIsSubmitted(true);
       })
       .catch((err) => {
         console.log(err);
+      })
+      .finally(() => {
+        // сброс полей ввода формы и текста кнопки Submit
+        setIsSubmitted(true);
+        setIsLoading(false);
       });
   }
 
@@ -87,9 +98,8 @@ function App() {
   function handleCardDelete(card) {
     api
       .deleteCard(card)
-      .then((res) => {
+      .then(() => {
         setCards((state) => state.filter((c) => c._id !== card._id));
-        alert(res.message);
       })
       .catch((err) => {
         console.log(err);
@@ -99,6 +109,7 @@ function App() {
   // -- Добавление новой карточки
 
   function handleAddPlaceSubmit(cardData) {
+    setIsLoading(true);
     api
       .addNewCard(cardData)
       .then((newCard) => {
@@ -108,6 +119,11 @@ function App() {
       })
       .catch((err) => {
         console.log(err);
+      })
+      .finally(() => {
+        // сброс полей ввода формы и текста кнопки Submit
+        setIsSubmitted(true);
+        setIsLoading(false);
       });
   }
 
@@ -115,6 +131,7 @@ function App() {
 
   function handleEditAvatarClick() {
     setIsEditAvatarPopupOpen(true);
+    setIsSubmitted(false);
   }
 
   function handleEditProfileClick() {
@@ -123,6 +140,7 @@ function App() {
 
   function handleAddPlaceClick() {
     setIsAddPlacePopupOpen(true);
+    setIsSubmitted(false);
   }
 
   function closeAllPopups() {
@@ -155,17 +173,20 @@ function App() {
         onClose={closeAllPopups}
         onUpdateAvatar={(avatar) => handleUpdateAvatar(avatar)}
         isSubmitted={isSubmitted}
+        isLoading={isLoading}
       />
       <EditProfilePopup
         isOpen={isEditProfilePopupOpen}
         onClose={closeAllPopups}
         onUpdateUser={(userData) => handleUpdateUser(userData)}
+        isLoading={isLoading}
       />
       <AddPlacePopup
         isOpen={isAddPlacePopupOpen}
         onClose={closeAllPopups}
         onAddPlace={(cardData) => handleAddPlaceSubmit(cardData)}
         isSubmitted={isSubmitted}
+        isLoading={isLoading}
       />
       <PopupWithForm
         isOpen={isConfirmationPopupOpen}
