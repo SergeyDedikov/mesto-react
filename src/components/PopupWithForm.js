@@ -1,4 +1,13 @@
+import { FormValidator, validConfig } from "../utils/formValidator";
+import { useEffect } from "react";
+
 function PopupWithForm(props) {
+  // -- Включаем валидацию формы
+  useEffect(() => {
+    const formValidator = new FormValidator(validConfig, props.name);
+    formValidator.enableValidation();
+  }, [props.name]);
+
   return (
     <div
       className={`
@@ -11,6 +20,7 @@ function PopupWithForm(props) {
           onSubmit={props.onSubmit}
           name={`${props.name}`}
           className={`popup__form popup__form_${props.name}`}
+          noValidate
         >
           <h3 className="popup__heading">{props.title}</h3>
           {props.children}

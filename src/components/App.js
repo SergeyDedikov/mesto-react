@@ -163,28 +163,28 @@ function App() {
         onEditProfile={handleEditProfileClick}
         onAddPlace={handleAddPlaceClick}
         cards={cards}
-        onCardClick={(card) => handleCardClick(card)}
-        onCardLike={(card) => handleCardLike(card)}
-        onCardDelete={(card) => handleCardDelete(card)}
+        onCardClick={handleCardClick}
+        onCardLike={handleCardLike}
+        onCardDelete={handleCardDelete}
       />
       <Footer />
       <EditAvatarPopup
         isOpen={isEditAvatarPopupOpen}
         onClose={closeAllPopups}
-        onUpdateAvatar={(avatar) => handleUpdateAvatar(avatar)}
+        onUpdateAvatar={handleUpdateAvatar}
         isSubmitted={isSubmitted}
         isLoading={isLoading}
       />
       <EditProfilePopup
         isOpen={isEditProfilePopupOpen}
         onClose={closeAllPopups}
-        onUpdateUser={(userData) => handleUpdateUser(userData)}
+        onUpdateUser={handleUpdateUser}
         isLoading={isLoading}
       />
       <AddPlacePopup
         isOpen={isAddPlacePopupOpen}
         onClose={closeAllPopups}
-        onAddPlace={(cardData) => handleAddPlaceSubmit(cardData)}
+        onAddPlace={handleAddPlaceSubmit}
         isSubmitted={isSubmitted}
         isLoading={isLoading}
       />
