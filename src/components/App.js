@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { CurentUserContext } from "../contexts/CurrentUserContext";
+import { CurentUserContext, defaultUser } from "../contexts/CurrentUserContext";
 
 import "../index.css";
 import api from "../utils/api";
@@ -14,7 +14,7 @@ import AddPlacePopup from "./AddPlacePopup";
 
 function App() {
   // -- Переменная состояния профиля
-  const [currentUser, setCurrentUser] = useState({});
+  const [currentUser, setCurrentUser] = useState(defaultUser);
 
   // -- Состояние карточек
   const [cards, setCards] = useState([]);

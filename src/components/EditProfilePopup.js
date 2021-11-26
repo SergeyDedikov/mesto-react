@@ -10,12 +10,12 @@ function EditProfilePopup(props) {
   const [description, setDescription] = useState("");
 
   useEffect(() => {
-    // Применяем эффект, когда попап открыт и есть данные
-    if (currentUser && props.isOpen) {
+    // Получаем данные пользователя для полей формы
+    if (currentUser) {
       setName(currentUser.name);
       setDescription(currentUser.about);
     }
-  }, [currentUser, props.isOpen]);
+  }, [currentUser]);
 
   function handleChangeName(e) {
     setName(e.target.value);
