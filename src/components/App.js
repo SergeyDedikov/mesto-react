@@ -6,11 +6,11 @@ import api from "../utils/api";
 import Header from "./Header";
 import Main from "./Main";
 import Footer from "./Footer";
-import PopupWithForm from "./PopupWithForm";
 import ImagePopup from "./ImagePopup";
 import EditProfilePopup from "./EditProfilePopup";
 import EditAvatarPopup from "./EditAvatarPopup";
 import AddPlacePopup from "./AddPlacePopup";
+import ConfirmationPopup from "./ConfirmationPopup";
 
 function App() {
   // -- Переменная состояния профиля
@@ -188,12 +188,10 @@ function App() {
         isSubmitted={isSubmitted}
         isLoading={isLoading}
       />
-      <PopupWithForm
+      <ConfirmationPopup
         isOpen={isConfirmationPopupOpen}
         onClose={closeAllPopups}
-        name={"confirmation"}
-        title={"Вы уверены?"}
-        textButtonSubmit={"Да"}
+        isLoading={isLoading}
       />
       <ImagePopup card={selectedCard} onClose={closeAllPopups} />
     </CurentUserContext.Provider>
