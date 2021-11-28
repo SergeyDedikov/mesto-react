@@ -1,4 +1,4 @@
-# Практическая работа №10: Место
+# Практическая работа №11: Место
 
 - Описание
 - Особенности
@@ -7,50 +7,25 @@
 
 **Описание**
 
-Практическая работа №10 курса "Веб-разработчик" Яндекс.Практикума — портирование проекта **"Место"** на платформу **React**.
+Практическая работа №11 курса "Веб-разработчик" Яндекс.Практикума — продолжаем изучать **React**.
 
 ---
 
 **Особенности**
 
-Освоили CRA: развёртывание нашего проекта на основе шаблона React. В этой работе мы познакомились с новым синтаксисом JSX, применили функциональные компоненты и хуки.
-
-Теперь проект практически полностью написан в JS — разметка html перекочевала в JS-компоненты с определёнными пропсами:
+Применили в проекте контекст — все данные о пользователе, полученные от сервера, сохраняем в одну переменную **currentUser**:
 
 ```javascript
-<>
-  <Header />
-  <Main
-    onEditAvatar={() => handleEditAvatarClick()}
-    onEditProfile={() => handleEditProfileClick()}
-    onAddPlace={() => handleAddPlaceClick()}
-    onCardClick={(card) => handleCardClick(card)}
-  />
-  <Footer />
-  <PopupWithForm isOpen={isEditAvatarPopupOpen} />
-  <ImagePopup card={selectedCard} onClose={() => closeAllPopups()} />
-</>
-```
-
-В самих компонентах добавились переменные состояния и "эффекты", меняющие эти переменные:
-
-```javascript
-function Main(props) {
-  // -- Переменные состояния профиля
-  const [userName, setUserName] = React.useState('');
-  const [userDescription, setUserDescription] = React.useState('');
-  const [userAvatar, setUserAvatar] = React.useState('');
-  // -- Состояние карточек
-  const [cards, setCards] = React.useState([]);
-
-  React.useEffect(() => {
-    // -- Запрос данных с сервера
-    Promise.all([api.getUserInfo(), api.getInitialCards()])
-      .then(([user, cards]) => {
-        setUserName(user.name);
-        setUserDescription(user.about);
-        setUserAvatar(user.avatar);
-        setCards(cards);
+function App() {
+  // -- Переменная состояния профиля
+  const [currentUser, setCurrentUser] = useState(defaultUser);
+  ...
+  // -- Запрос данных с сервера
+  useEffect(() => {
+    Promise.all([api.getUserInfo(), api.getCardList()])
+      .then(([userData, cardsData]) => {
+        setCurrentUser(userData);
+        setCards(cardsData);
       })
       .catch((err) => {
         console.log(err);
@@ -58,25 +33,70 @@ function Main(props) {
   }, []);
 ```
 
-Передаваемые в компонент "пропсы" теперь удобно вставлять в разметку в качестве переменных и методов:
+Подписываемся на контекст и используем его в других компонентах:
 
 ```javascript
-function ImagePopup({ card, onClose }) {
+return (
+    <CurentUserContext.Provider value={currentUser}>
+      <Header />
+      <Main />
+      ...)
+
+function Main(props) {
+  // -- Подписываемся на контекст
+  const currentUser = useContext(CurentUserContext);
+...
   return (
-    <div className={`popup popup_type_card ${card && "popup_opened"}`}>
-      <figure className="popup__card">
-        <img
-          className="popup__card-image"
-          src={card ? card.link : ""}
-          alt={card ? `На фотографии: ${card.name}` : ""}
-        />
-        ...
-        <button
-          onClick={onClose}
-          className="popup__close popup__close_card button"
-          type="button"
-        ></button>
+    <main className="main">
+      <section className="profile" aria-label="Профиль пользователя">
+        <div className="profile__avatar-box">
+          <img
+            className="profile__avatar"
+            src={currentUser.avatar}
+            alt="Аватар пользователя"
+          />
+...
+function Card({ card, onCardClick, onCardLike, onCardDelete }) {
+  const currentUser = useContext(CurentUserContext);
+
+  // Определяем, являемся ли мы владельцем текущей карточки
+  const isOwn = card.owner._id === currentUser._id;
+```
+
+Реализовали редактирование и отправку всех форм:
+
+```javascript
+const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+
+  useEffect(() => {
+    // Получаем данные пользователя для полей формы
+    if (currentUser && props.isOpen) {
+      setName(currentUser.name);
+      setDescription(currentUser.about);
+    }
+  }, [currentUser, props.isOpen]);
+
+  function handleChangeName(e) {
+    setName(e.target.value);
+  }
+...
+ useEffect(() => {
+    if (props.isSubmitted) {
+      avatarRef.current.value = "";
+    }
+  }, [props.isSubmitted]);
+
+  return (
+    <PopupWithForm
+      isOpen={props.isOpen}
+      onClose={props.onClose}
+      onSubmit={handleSubmit}
+      name={"edit-avatar"}
+      title={"Обновить аватар"}
+      textButtonSubmit={props.isLoading ? "Сохранение..." : "Сохранить"}
+    >
 ```
 
 ---
-Проект ещё не полностью функционален — это задача следующей практической работы.
+Дальнейше расширение функционала данного проекта — в следующей практической работе.
