@@ -68,7 +68,10 @@ function App() {
     api
       .setUserAvatar(avatar)
       .then((newUser) => {
-        setCurrentUser(newUser);
+        setCurrentUser({
+          ...currentUser,
+          avatar: newUser.avatar,
+        });
         closeAllPopups();
       })
       .catch((err) => {
