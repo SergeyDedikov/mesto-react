@@ -50,7 +50,7 @@ function EditProfilePopup(props) {
             value={name}
             onChange={handleChangeName}
             id="name"
-            placeholder="Имя"
+            placeholder="Введите имя"
             className="popup__input popup__input_value_name"
             type="text"
             name="name"
@@ -65,7 +65,7 @@ function EditProfilePopup(props) {
             value={description}
             onChange={handleChangeDescription}
             id="job"
-            placeholder="О себе"
+            placeholder="Расскажите немного о себе"
             className="popup__input popup__input_value_job"
             type="text"
             name="job"
