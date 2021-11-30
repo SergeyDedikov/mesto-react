@@ -1,27 +1,32 @@
-import { useRef } from "react";
-import { useEffect } from "react/cjs/react.development";
+import { useEffect, useState } from "react";
 import PopupWithForm from "./PopupWithForm";
 
 function AddPlacePopup(props) {
-  const cardName = useRef();
-  const cardLink = useRef();
+  // -- Общий стэйт для полей ввода
+  const [inputValues, setInputValues] = useState({ place: "", link: "" });
+
+  function handleChange(e) {
+    setInputValues((values) => {
+      return { ...values, [e.target.name]: e.target.value };
+    });
+  }
 
   function handleSubmit(e) {
     e.preventDefault();
 
     props.onAddPlace({
-      name: cardName.current.value,
-      link: cardLink.current.value,
+      name: inputValues.place,
+      link: inputValues.link,
     });
   }
-  
+
   useEffect(() => {
     // Очищаем поля ввода после отправки
     if (props.isSubmitted) {
-      cardName.current.value = "";
-      cardLink.current.value = "";
+      inputValues.place = "";
+      inputValues.link = "";
     }
-  }, [props.isSubmitted]);
+  }, [props.isSubmitted, inputValues]);
 
   return (
     <PopupWithForm
@@ -35,7 +40,8 @@ function AddPlacePopup(props) {
       <fieldset className="popup__input-container">
         <label className="popup__field">
           <input
-            ref={cardName}
+            value={inputValues.place}
+            onChange={handleChange}
             id="place"
             className="popup__input popup__input_value_place"
             type="text"
@@ -49,7 +55,8 @@ function AddPlacePopup(props) {
         </label>
         <label className="popup__field">
           <input
-            ref={cardLink}
+            value={inputValues.link}
+            onChange={handleChange}
             id="link"
             className="popup__input popup__input_value_link"
             type="url"
