@@ -40,14 +40,13 @@ function Main(props) {
       <section className="cards" aria-label="Карточки мест">
         <ul className="cards__list">
           {props.cards.map((cardItem) => (
-            <li key={cardItem._id}>
               <Card
+                key={cardItem._id}
                 card={cardItem}
                 onCardClick={props.onCardClick}
                 onCardLike={props.onCardLike}
                 onCardDelete={props.onCardDelete}
               />
-            </li>
           ))}
         </ul>
       </section>
