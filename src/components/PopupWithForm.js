@@ -1,15 +1,22 @@
 import { FormValidator, validConfig } from "../utils/formValidator";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 function PopupWithForm(props) {
-  // -- Включаем валидацию формы
+  // -- Создаём экземпляры валидаторов форм
+  const [validator, setValidator] = useState(null);
+
   useEffect(() => {
     const formValidator = new FormValidator(validConfig, props.name);
     formValidator.enableValidation();
-    if (props.isOpen) {
-      formValidator.resetValidation();
-    };
-  }, [props.name, props.isOpen]);
+    setValidator(formValidator);
+  }, [props.name]);
+
+  // -- Сброс валидации при открытии попапа
+  useEffect(() => {
+    if (props.isOpen && validator) {
+      validator.resetValidation();
+    }
+  }, [props.isOpen, validator]);
 
   return (
     <div
