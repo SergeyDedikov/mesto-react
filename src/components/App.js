@@ -68,18 +68,15 @@ function App() {
     api
       .setUserAvatar(avatar)
       .then((newUser) => {
-        setCurrentUser({
-          ...currentUser,
-          avatar: newUser.avatar,
-        });
+        setCurrentUser(newUser);
+        // сброс полей ввода формы и текста кнопки Submit
+        setIsSubmitted(true);
         closeAllPopups();
       })
       .catch((err) => {
         console.log(err);
       })
       .finally(() => {
-        // сброс полей ввода формы и текста кнопки Submit
-        setIsSubmitted(true);
         setIsLoading(false);
       });
   }
@@ -91,9 +88,16 @@ function App() {
     const isLiked = card.likes.some((i) => i._id === currentUser._id);
 
     // Отправляем запрос в API и получаем обновлённые данные карточки
-    api.changeLikeCardStatus(card, !isLiked).then((newCard) => {
-      setCards((state) => state.map((c) => (c._id === card._id ? newCard : c)));
-    });
+    api
+      .changeLikeCardStatus(card, !isLiked)
+      .then((newCard) => {
+        setCards((state) =>
+          state.map((c) => (c._id === card._id ? newCard : c))
+        );
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   // -- Удаление карточки
@@ -118,14 +122,13 @@ function App() {
       .then((newCard) => {
         setCards([newCard, ...cards]);
         closeAllPopups();
+        // сброс полей ввода формы и текста кнопки Submit
         setIsSubmitted(true);
       })
       .catch((err) => {
         console.log(err);
       })
       .finally(() => {
-        // сброс полей ввода формы и текста кнопки Submit
-        setIsSubmitted(true);
         setIsLoading(false);
       });
   }
